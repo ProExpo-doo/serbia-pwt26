@@ -22,7 +22,7 @@
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { background: var(--bg); color: var(--text); font-family: var(--font-body); font-weight: 400; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+  body { background: var(--bg); color: var(--text); font-family: var(--font-body); font-weight: 400; line-height: 1.7; -webkit-font-smoothing: antialiased; font-size: 18px; }
 
   /* ── HEADER ── */
   header { background: var(--bg); border-bottom: 1px solid var(--border); padding: 0 48px; position: sticky; top: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; height: 68px; }
@@ -35,10 +35,10 @@
 
   /* ── HERO ── */
   .hero { background: var(--bg-soft); border-bottom: 1px solid var(--border); padding: 56px 48px 48px; position: relative; overflow: hidden; }
-  .hero::before { content: 'セルビア'; font-family: var(--font-jp); font-size: 9rem; font-weight: 300; color: var(--border); position: absolute; right: 48px; top: 50%; transform: translateY(-50%); line-height: 1; pointer-events: none; }
+  .hero::before { content: 'セルビア'; font-family: var(--font-jp); font-size: 9rem; font-weight: 600; letter-spacing: -0.1em; color: var(--border); position: absolute; right: 48px; top: 50%; transform: translateY(-50%); line-height: 1; pointer-events: none; z-index: 0; }
   .hero-eyebrow { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
-  .hero h1 { font-family: var(--font-display); font-size: 3.2rem; font-weight: 300; color: var(--heading); line-height: 1.15; letter-spacing: -0.01em; }
-  .hero h1 em { font-style: italic; font-weight: 300; }
+  .hero h1 { font-family: var(--font-display); font-size: 3.2rem; font-weight: 300; color: var(--heading); line-height: 1.15; letter-spacing: -0.01em; z-index: 100; }
+  .hero h1 em { font-style: italic; font-weight: 300; z-index: 100; }
   .hero-meta { font-size: 0.78rem; color: var(--text-light); margin-top: 14px; letter-spacing: 0.08em; }
   .hero-meta span { display: inline-block; margin-right: 24px; }
   .hero-meta span::before { content: '— '; color: var(--gold); }
@@ -60,15 +60,15 @@
   .ov-label { font-size: 0.6rem; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
   .ov-label.jp { font-family: var(--font-jp); letter-spacing: 0.1em; text-transform: none; }
   .booth-number { font-family: var(--font-display); font-size: 3.4rem; font-weight: 300; color: var(--heading); line-height: 1; letter-spacing: -0.02em; margin-bottom: 14px; }
-  .ov-detail { font-size: 0.82rem; color: var(--text); line-height: 2.1; }
-  .ov-detail.jp { font-family: var(--font-jp); font-size: 0.8rem; }
+  .ov-detail { font-size: 1rem; color: var(--text); line-height: 2.1; }
+  .ov-detail.jp { font-family: var(--font-jp); font-size: 1rem; }
   .ov-detail strong { color: var(--heading); }
   .ov-badge { display: inline-block; margin-top: 18px; background: var(--heading); color: #fff; font-size: 0.62rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; padding: 6px 14px; border-radius: 3px; }
   .ov-badge.jp { font-family: var(--font-jp); text-transform: none; letter-spacing: 0.08em; }
 
   /* booth + map side by side */
-  .ov-location-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; margin-top: 20px; }
-  .ov-map-img { width: 100%; border: 1px solid var(--border); border-radius: 6px; display: block; }
+  .ov-location-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: stretch; margin-top: 20px; }
+  .ov-map-img { width: 100%; height: 100%; border: 1px solid var(--border); border-radius: 6px; display: block; object-fit: cover; }
 
   /* organizer — subtle, at bottom */
   .ov-organizer { margin-top: 16px; padding: 20px 24px; background: var(--bg-soft); border: 1px solid var(--border); border-radius: 6px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
@@ -188,7 +188,7 @@
     .ov-organizer { flex-direction: column; align-items: flex-start; gap: 8px; }
     .ov-stats { grid-template-columns: repeat(2,1fr); }
     .header-brand { flex-direction: column; align-items: flex-start; gap: 2px; }
-  }
+    .hero-eyebrow, .hero h1, .hero-meta { position: relative; z-index: 1; }
   }
 </style>
 </head>
@@ -285,11 +285,10 @@
       <span class="ov-badge" data-lang="en">Serbian Pavilion</span>
       <span class="ov-badge jp" data-lang="jp">セルビアパビリオン</span>
     </div>
-    <div>
-      <!-- Hall map image — upload hall.png to root folder -->
-      <img src="hall.png" alt="Hall 3 floor plan" class="ov-map-img">
+    <div style="display: flex;">
+      <img src="hall.png" alt="Hall 3 East floor plan" class="ov-map-img">
     </div>
-  </div>
+    </div>
 
   <hr class="ov-divider">
 
