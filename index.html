@@ -27,6 +27,7 @@
 <meta name="twitter:description" content="Six Serbian wine and spirits producers at ProWine Tokyo 2026. East Hall 3, Booth W-K01. April 15–17, Tokyo Big Sight.">
 <meta name="twitter:image" content="https://tokyo.serbia-prowine.com/images/og-image.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.4/tiny-slider.css">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garant:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Raleway:wght@300;400;500;600&family=Noto+Serif+JP:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -56,12 +57,21 @@
   .lang-btn.active { background: var(--heading); color: #fff; }
 
   /* ── HERO ── */
-  .hero { background: var(--bg-soft); border-bottom: 1px solid var(--border); padding: 56px 48px 48px; position: relative; overflow: hidden; }
-  .hero::before { content: 'セルビア'; font-family: var(--font-jp); font-size: 9rem; font-weight: 600; letter-spacing: -0.1em; color: var(--border); position: absolute; right: 48px; top: 50%; transform: translateY(-50%); line-height: 1; pointer-events: none; z-index: 0; }
-  .hero-eyebrow { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
-  .hero h1 { font-family: var(--font-display); font-size: 3.2rem; font-weight: 300; color: var(--heading); line-height: 1.15; letter-spacing: -0.01em; z-index: 100; }
-  .hero h1 em { font-style: italic; font-weight: 300; z-index: 100; }
-  .hero-meta { font-size: 0.78rem; color: var(--text-light); margin-top: 14px; letter-spacing: 0.08em; }
+  .hero { border-bottom: 1px solid var(--border); padding: 56px 48px 48px; position: relative; overflow: hidden; background: var(--bg-soft); }
+  .hero::before { content: 'セルビア'; font-family: var(--font-jp); font-size: 9rem; font-weight: 600; letter-spacing: -0.1em; color: var(--border); position: absolute; right: 48px; top: 50%; transform: translateY(-50%); line-height: 1; pointer-events: none; z-index: 1; }
+
+  /* Slider — fills entire hero as background */
+  .hero-slider { position: absolute; inset: 0; z-index: 0; }
+  .hero-slide { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1.2s ease; }
+  .hero-slide.active { opacity: 1; }
+  /* Overlay — keeps text readable */
+  .hero-overlay { position: absolute; inset: 0; background: rgba(247, 245, 242, 0.85); z-index: 1; }
+
+  /* Hero text — above slider and overlay */
+  .hero-eyebrow { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; position: relative; z-index: 2; }
+  .hero h1 { font-family: var(--font-display); font-size: 3.2rem; font-weight: 300; color: var(--heading); line-height: 1.15; letter-spacing: -0.01em; position: relative; z-index: 2; }
+  .hero h1 em { font-style: italic; font-weight: 300; }
+  .hero-meta { font-size: 0.78rem; color: var(--text-light); margin-top: 14px; letter-spacing: 0.08em; position: relative; z-index: 2; }
   .hero-meta span { display: inline-block; margin-right: 24px; }
   .hero-meta span::before { content: '— '; color: var(--gold); }
 
@@ -132,16 +142,16 @@
 
   /* ── WINE CARDS ── */
   .wine-cards { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
-.wine-card { display: flex; flex-direction: column; gap: 3px; padding: 10px 14px; background: var(--bg); border-radius: 4px; border: 1px solid var(--border); }
-.wine-card-top { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
-.wine-name { font-family: var(--font-display); font-size: 1rem; font-weight: 400; color: var(--heading); }
-.wine-type { font-size: 0.6rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; padding: 2px 7px; border-radius: 3px; flex-shrink: 0; }
-.wine-type.white { background: #F0EDE6; color: var(--text-light); }
-.wine-type.rose  { background: #F5E8E6; color: #A0525A; }
-.wine-type.red   { background: #F0E8EA; color: var(--heading); }
-.wine-card-detail { font-size: 0.73rem; color: var(--text-light); line-height: 1.5; }
-body.lang-jp .wine-card-detail { font-family: var(--font-jp); font-size: 0.7rem; }
-body.lang-jp .wine-name { font-family: var(--font-jp); font-size: 0.88rem; }
+  .wine-card { display: flex; flex-direction: column; gap: 3px; padding: 10px 14px; background: var(--bg); border-radius: 4px; border: 1px solid var(--border); }
+  .wine-card-top { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+  .wine-name { font-family: var(--font-display); font-size: 1rem; font-weight: 400; color: var(--heading); }
+  .wine-type { font-size: 0.6rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; padding: 2px 7px; border-radius: 3px; flex-shrink: 0; }
+  .wine-type.white { background: #F0EDE6; color: var(--text-light); }
+  .wine-type.rose  { background: #F5E8E6; color: #A0525A; }
+  .wine-type.red   { background: #F0E8EA; color: var(--heading); }
+  .wine-card-detail { font-size: 0.73rem; color: var(--text-light); line-height: 1.5; }
+  body.lang-jp .wine-card-detail { font-family: var(--font-jp); font-size: 0.7rem; }
+  body.lang-jp .wine-name { font-family: var(--font-jp); font-size: 0.88rem; }
 
   /* ── PHOTO GALLERY ── */
   .gallery-section { margin-top: 40px; padding-top: 36px; border-top: 1px solid var(--border); }
@@ -204,12 +214,13 @@ body.lang-jp .wine-name { font-family: var(--font-jp); font-size: 0.88rem; }
   body.lang-en .ov-stats, body.lang-jp .ov-stats { display: grid; }
   body.lang-en .ov-stat, body.lang-jp .ov-stat { display: block; }
   body.lang-en .ov-badge, body.lang-jp .ov-badge { display: inline-block; }
+  body.lang-en .hero-overlay, body.lang-jp .hero-overlay { display: block; }
 
   /* ── RESPONSIVE ── */
   @media (max-width: 720px) {
     header { padding: 0 16px; }
     .hero { padding: 36px 20px 28px; }
-    .hero::before { font-size: 4rem; right: 12px; }
+    .hero::before { font-size: 4rem; right: 12px; z-index: -1; }
     .hero h1 { font-size: 2rem; }
     .exhibitor-nav { padding: 0; flex-wrap: wrap; border-bottom: 2px solid var(--border); }
     .nav-tab { padding: 12px 14px 10px; font-size: 0.65rem; letter-spacing: 0.08em; flex: 1 1 0; text-align: center; border-bottom: none; border-right: 1px solid var(--border); }
@@ -223,7 +234,6 @@ body.lang-jp .wine-name { font-family: var(--font-jp); font-size: 0.88rem; }
     .ov-organizer { flex-direction: column; align-items: flex-start; gap: 8px; }
     .ov-stats { grid-template-columns: repeat(2,1fr); }
     .header-brand { flex-direction: column; align-items: flex-start; gap: 2px; }
-    .hero-eyebrow, .hero h1, .hero-meta { position: relative; z-index: 1; }
   }
 </style>
 </head>
@@ -237,11 +247,21 @@ body.lang-jp .wine-name { font-family: var(--font-jp); font-size: 0.88rem; }
   </div>
   <div class="lang-toggle">
     <button class="lang-btn" onclick="setLang('en')">EN</button>
-    <button class="lang-btn active" onclick="setLang('jp')">日本語</button>  </div>
+    <button class="lang-btn active" onclick="setLang('jp')">日本語</button>
+  </div>
 </header>
 
-<!-- HERO -->
+<!-- HERO — slider is background, text is on top -->
 <section class="hero">
+  <!-- Background slider -->
+  <div class="hero-slider">
+    <img class="hero-slide active" src="images/hero1.jpg" alt="Serbian vineyards">
+    <img class="hero-slide" src="images/hero2.jpg" alt="Serbian vineyards">
+    <img class="hero-slide" src="images/hero3.jpg" alt="Serbian vineyards">
+  </div>
+  <!-- Overlay for text readability -->
+  <div class="hero-overlay"></div>
+  <!-- Text content -->
   <div class="hero-eyebrow" data-lang="en">Republic of Serbia · Group Pavilion</div>
   <div class="hero-eyebrow" data-lang="jp">セルビア共和国・グループパビリオン</div>
   <h1><em data-lang="en">Serbian Wines &amp; Spirits</em><em data-lang="jp">セルビアのワイン＆スピリッツ</em></h1>
@@ -301,7 +321,7 @@ body.lang-jp .wine-name { font-family: var(--font-jp); font-size: 0.88rem; }
 
   <hr class="ov-divider">
 
-  <!-- 2. BOOTH LOCATION + HALL MAP in two columns -->
+  <!-- 2. BOOTH LOCATION + HALL MAP -->
   <div class="ov-label" data-lang="en">Booth Location &amp; Layout</div>
   <div class="ov-label jp" data-lang="jp">ブースの位置とレイアウト</div>
   <div class="ov-location-grid">
@@ -323,7 +343,7 @@ body.lang-jp .wine-name { font-family: var(--font-jp); font-size: 0.88rem; }
     <div style="display: flex;">
       <img src="hall.png" alt="Hall 3 East floor plan" class="ov-map-img">
     </div>
-    </div>
+  </div>
 
   <hr class="ov-divider">
 
@@ -361,7 +381,7 @@ body.lang-jp .wine-name { font-family: var(--font-jp); font-size: 0.88rem; }
 
   <hr class="ov-divider">
 
-  <!-- 3. ORGANIZER — subtle, smaller -->
+  <!-- 3. ORGANIZER -->
   <div class="ov-organizer">
     <div>
       <div class="ov-organizer-label" data-lang="en">Joint Stand Organizer</div>
@@ -394,101 +414,91 @@ body.lang-jp .wine-name { font-family: var(--font-jp); font-size: 0.88rem; }
       <p class="about-text" data-lang="en">We believe in our wines, because we believe in our grapes. BT Winery produces wines from grapes cultivated in our own vineyards in the very heart of Fruška Gora — where the Pannonian sun and the warm Mediterranean wind create ideal conditions for the vine. Our grandparents believed this region was something special. We prove they were not wrong.<br><br>We follow the most traditional and ancestral vinification methods, preserved in Fruška Gora over centuries. Five metres underground, surrounded by olive trees and vineyards, our modern wine cellar provides optimal conditions for the production and maturation of our wines.</p>
       <p class="about-text jp" data-lang="jp">フルシュカ・ゴーラの自社畑で丁寧に育てられたブドウから生まれるBTワイナリーのワイン。パノニア地方の太陽と温かい地中海の風が織りなす理想的な環境の中、数世紀にわたり受け継がれてきた伝統的な醸造技術を守り続けています。<br><br>オリーブの木とブドウ畑に囲まれた地下5メートルのワインセラーで、最高の熟成環境を提供しています。</p>
       <div class="awards-section">
-  <div class="awards-label" data-lang="en">Wines</div>
-  <div class="awards-label" data-lang="jp">ワイン</div>
-
-  <div class="wine-cards">
-
-    <div class="wine-card">
-      <div class="wine-card-top">
-        <span class="wine-name" data-lang="en">Sha Sha</span>
-        <span class="wine-name" data-lang="jp">シャシャ</span>
-        <span class="wine-type white" data-lang="en">White</span>
-        <span class="wine-type white" data-lang="jp">白</span>
+        <div class="awards-label" data-lang="en">Wines</div>
+        <div class="awards-label" data-lang="jp">ワイン</div>
+        <div class="wine-cards">
+          <div class="wine-card">
+            <div class="wine-card-top">
+              <span class="wine-name" data-lang="en">Sha Sha</span>
+              <span class="wine-name" data-lang="jp">シャシャ</span>
+              <span class="wine-type white" data-lang="en">White</span>
+              <span class="wine-type white" data-lang="jp">白</span>
+            </div>
+            <div class="wine-card-detail" data-lang="en">Green apple, pear, citrus · partial oak aging</div>
+            <div class="wine-card-detail" data-lang="jp">青リンゴ、洋梨、柑橘 · 一部樽熟成</div>
+          </div>
+          <div class="wine-card">
+            <div class="wine-card-top">
+              <span class="wine-name" data-lang="en">Miss Tamjanika</span>
+              <span class="wine-name" data-lang="jp">ミス・タムヤニカ</span>
+              <span class="wine-type white" data-lang="en">White</span>
+              <span class="wine-type white" data-lang="jp">白</span>
+            </div>
+            <div class="wine-card-detail" data-lang="en">100% Tamjanika · 12% alc · inox aged</div>
+            <div class="wine-card-detail" data-lang="jp">タムヤニカ100% · アルコール12% · ステンレスタンク熟成</div>
+          </div>
+          <div class="wine-card">
+            <div class="wine-card-top">
+              <span class="wine-name" data-lang="en">Tam Tam Tamjanika</span>
+              <span class="wine-name" data-lang="jp">タムタム・タムヤニカ</span>
+              <span class="wine-type white" data-lang="en">White</span>
+              <span class="wine-type white" data-lang="jp">白</span>
+            </div>
+            <div class="wine-card-detail" data-lang="en">100% Tamjanika · 12% alc · inox aged</div>
+            <div class="wine-card-detail" data-lang="jp">タムヤニカ100% · アルコール12% · ステンレスタンク熟成</div>
+          </div>
+          <div class="wine-card">
+            <div class="wine-card-top">
+              <span class="wine-name" data-lang="en">Teodora Rosé</span>
+              <span class="wine-name" data-lang="jp">テオドラ・ロゼ</span>
+              <span class="wine-type rose" data-lang="en">Rosé</span>
+              <span class="wine-type rose" data-lang="jp">ロゼ</span>
+            </div>
+            <div class="wine-card-detail" data-lang="en">100% Aleatico · 14% alc · inox aged</div>
+            <div class="wine-card-detail" data-lang="jp">アレアティコ100% · アルコール14% · ステンレスタンク熟成</div>
+          </div>
+          <div class="wine-card">
+            <div class="wine-card-top">
+              <span class="wine-name" data-lang="en">PiNo – Pinot Noir</span>
+              <span class="wine-name" data-lang="jp">ピノ – ピノ・ノワール</span>
+              <span class="wine-type red" data-lang="en">Red</span>
+              <span class="wine-type red" data-lang="jp">赤</span>
+            </div>
+            <div class="wine-card-detail" data-lang="en">100% Pinot Noir · 14% alc · barrique 12 months</div>
+            <div class="wine-card-detail" data-lang="jp">ピノ・ノワール100% · アルコール14% · バリック12ヶ月熟成</div>
+          </div>
+          <div class="wine-card">
+            <div class="wine-card-top">
+              <span class="wine-name" data-lang="en">Mister Marselan</span>
+              <span class="wine-name" data-lang="jp">ミスター・マルスラン</span>
+              <span class="wine-type red" data-lang="en">Red</span>
+              <span class="wine-type red" data-lang="jp">赤</span>
+            </div>
+            <div class="wine-card-detail" data-lang="en">100% Marselan · 14.5% alc · barrique 18 months · Decanter 95pts (2018 &amp; 2021)</div>
+            <div class="wine-card-detail" data-lang="jp">マルスラン100% · アルコール14.5% · バリック18ヶ月熟成 · デカンター95点（2018・2021年）</div>
+          </div>
+          <div class="wine-card">
+            <div class="wine-card-top">
+              <span class="wine-name" data-lang="en">Casa De Oro</span>
+              <span class="wine-name" data-lang="jp">カサ・デ・オロ</span>
+              <span class="wine-type red" data-lang="en">Red</span>
+              <span class="wine-type red" data-lang="jp">赤</span>
+            </div>
+            <div class="wine-card-detail" data-lang="en">100% Prokupac · 13% alc · barrique 12 months</div>
+            <div class="wine-card-detail" data-lang="jp">プロクパツ100% · アルコール13% · バリック12ヶ月熟成</div>
+          </div>
+          <div class="wine-card">
+            <div class="wine-card-top">
+              <span class="wine-name" data-lang="en">President Vranac</span>
+              <span class="wine-name" data-lang="jp">プレジデント・ヴラナツ</span>
+              <span class="wine-type red" data-lang="en">Red</span>
+              <span class="wine-type red" data-lang="jp">赤</span>
+            </div>
+            <div class="wine-card-detail" data-lang="en">100% Vranac · 14.5% alc · French oak 12 months</div>
+            <div class="wine-card-detail" data-lang="jp">ヴラナツ100% · アルコール14.5% · フレンチオーク12ヶ月熟成</div>
+          </div>
+        </div>
       </div>
-      <div class="wine-card-detail" data-lang="en">Green apple, pear, citrus · partial oak aging</div>
-      <div class="wine-card-detail" data-lang="jp">青リンゴ、洋梨、柑橘 · 一部樽熟成</div>
-    </div>
-
-    <div class="wine-card">
-      <div class="wine-card-top">
-        <span class="wine-name" data-lang="en">Miss Tamjanika</span>
-        <span class="wine-name" data-lang="jp">ミス・タムヤニカ</span>
-        <span class="wine-type white" data-lang="en">White</span>
-        <span class="wine-type white" data-lang="jp">白</span>
-      </div>
-      <div class="wine-card-detail" data-lang="en">100% Tamjanika · 12% alc · inox aged</div>
-      <div class="wine-card-detail" data-lang="jp">タムヤニカ100% · アルコール12% · ステンレスタンク熟成</div>
-    </div>
-
-    <div class="wine-card">
-      <div class="wine-card-top">
-        <span class="wine-name" data-lang="en">Tam Tam Tamjanika</span>
-        <span class="wine-name" data-lang="jp">タムタム・タムヤニカ</span>
-        <span class="wine-type white" data-lang="en">White</span>
-        <span class="wine-type white" data-lang="jp">白</span>
-      </div>
-      <div class="wine-card-detail" data-lang="en">100% Tamjanika · 12% alc · inox aged</div>
-      <div class="wine-card-detail" data-lang="jp">タムヤニカ100% · アルコール12% · ステンレスタンク熟成</div>
-    </div>
-
-    <div class="wine-card">
-      <div class="wine-card-top">
-        <span class="wine-name" data-lang="en">Teodora Rosé</span>
-        <span class="wine-name" data-lang="jp">テオドラ・ロゼ</span>
-        <span class="wine-type rose" data-lang="en">Rosé</span>
-        <span class="wine-type rose" data-lang="jp">ロゼ</span>
-      </div>
-      <div class="wine-card-detail" data-lang="en">100% Aleatico · 14% alc · inox aged</div>
-      <div class="wine-card-detail" data-lang="jp">アレアティコ100% · アルコール14% · ステンレスタンク熟成</div>
-    </div>
-
-    <div class="wine-card">
-      <div class="wine-card-top">
-        <span class="wine-name" data-lang="en">PiNo – Pinot Noir</span>
-        <span class="wine-name" data-lang="jp">ピノ – ピノ・ノワール</span>
-        <span class="wine-type red" data-lang="en">Red</span>
-        <span class="wine-type red" data-lang="jp">赤</span>
-      </div>
-      <div class="wine-card-detail" data-lang="en">100% Pinot Noir · 14% alc · barrique 12 months</div>
-      <div class="wine-card-detail" data-lang="jp">ピノ・ノワール100% · アルコール14% · バリック12ヶ月熟成</div>
-    </div>
-
-    <div class="wine-card">
-      <div class="wine-card-top">
-        <span class="wine-name" data-lang="en">Mister Marselan</span>
-        <span class="wine-name" data-lang="jp">ミスター・マルスラン</span>
-        <span class="wine-type red" data-lang="en">Red</span>
-        <span class="wine-type red" data-lang="jp">赤</span>
-      </div>
-      <div class="wine-card-detail" data-lang="en">100% Marselan · 14.5% alc · barrique 18 months · Decanter 95pts (2018 &amp; 2021)</div>
-      <div class="wine-card-detail" data-lang="jp">マルスラン100% · アルコール14.5% · バリック18ヶ月熟成 · デカンター95点（2018・2021年）</div>
-    </div>
-
-    <div class="wine-card">
-      <div class="wine-card-top">
-        <span class="wine-name" data-lang="en">Casa De Oro</span>
-        <span class="wine-name" data-lang="jp">カサ・デ・オロ</span>
-        <span class="wine-type red" data-lang="en">Red</span>
-        <span class="wine-type red" data-lang="jp">赤</span>
-      </div>
-      <div class="wine-card-detail" data-lang="en">100% Prokupac · 13% alc · barrique 12 months</div>
-      <div class="wine-card-detail" data-lang="jp">プロクパツ100% · アルコール13% · バリック12ヶ月熟成</div>
-    </div>
-
-    <div class="wine-card">
-      <div class="wine-card-top">
-        <span class="wine-name" data-lang="en">President Vranac</span>
-        <span class="wine-name" data-lang="jp">プレジデント・ヴラナツ</span>
-        <span class="wine-type red" data-lang="en">Red</span>
-        <span class="wine-type red" data-lang="jp">赤</span>
-      </div>
-      <div class="wine-card-detail" data-lang="en">100% Vranac · 14.5% alc · French oak 12 months</div>
-      <div class="wine-card-detail" data-lang="jp">ヴラナツ100% · アルコール14.5% · フレンチオーク12ヶ月熟成</div>
-    </div>
-
-  </div>
-</div>
       <div class="gallery-section">
         <div class="gallery-label" data-lang="en">Gallery</div>
         <div class="gallery-label jp" data-lang="jp">ギャラリー</div>
@@ -503,60 +513,31 @@ body.lang-jp .wine-name { font-family: var(--font-jp); font-size: 0.88rem; }
     </div>
     <aside>
       <div class="detail-card">
-  <div class="detail-section">
-    <div class="detail-label" data-lang="en">Terroir</div>
-    <div class="detail-label jp" data-lang="jp">テロワール</div>
-    <div class="detail-value" data-lang="en">
-      <strong>Fruška Gora</strong>, Vojvodina<br>
-      Pannonian sea-origin soil — rich in minerals, marl and sandstone<br><br>
-      Warm Pannonian sun · Mediterranean wind influence · ideal ripening conditions
-    </div>
-    <div class="detail-value jp" data-lang="jp">
-      <strong>フルシュカ・ゴーラ</strong>、ヴォイヴォディナ<br>
-      パノニア海起源の土壌 — ミネラル豊富、泥灰岩と砂岩<br><br>
-      パノニアの太陽 · 地中海の風の影響 · 理想的な成熟条件
-    </div>
-  </div>
-  <div class="detail-section">
-    <div class="detail-label" data-lang="en">Viticulture</div>
-    <div class="detail-label jp" data-lang="jp">栽培方法</div>
-    <div class="detail-value" data-lang="en">
-      Own vineyards only<br>
-      Low yield — grapes left on vines as long as possible<br>
-      Multiple clones per variety<br>
-      Natural cultivation methods
-    </div>
-    <div class="detail-value jp" data-lang="jp">
-      自社畑のブドウのみ使用<br>
-      低収量 — 完熟まで長期間樹上で成熟<br>
-      品種ごとに複数クローンを栽培<br>
-      自然農法
-    </div>
-  </div>
-  <div class="detail-section">
-    <div class="detail-label" data-lang="en">Winemaking</div>
-    <div class="detail-label jp" data-lang="jp">醸造</div>
-    <div class="detail-value" data-lang="en">
-      Cellar 5m underground<br>
-      Line 1 — inox aged (1 year)<br>
-      Line 2 — barrique aged (2–4 years)<br>
-      Unfiltered (premium line)
-    </div>
-    <div class="detail-value jp" data-lang="jp">
-      地下5mのワインセラー<br>
-      ライン1 — ステンレスタンク熟成（1年）<br>
-      ライン2 — バリック熟成（2〜4年）<br>
-      無ろ過（プレミアムライン）
-    </div>
-  </div>
-  <div class="detail-section">
-    <div class="detail-label" data-lang="en">Contact</div>
-    <div class="detail-label jp" data-lang="jp">連絡先</div>
-    <div class="contact-item"><span class="contact-icon">📱</span><span>+381 63 400 855</span></div>
-    <div class="contact-item"><span class="contact-icon">✉️</span><a href="mailto:info@bt-winery.com">info@bt-winery.com</a></div>
-    <div class="contact-item"><span class="contact-icon">🌐</span><a href="https://bt-winery.com" target="_blank">bt-winery.com</a></div>
-  </div>
-</div>
+        <div class="detail-section">
+          <div class="detail-label" data-lang="en">Terroir</div>
+          <div class="detail-label jp" data-lang="jp">テロワール</div>
+          <div class="detail-value" data-lang="en"><strong>Fruška Gora</strong>, Vojvodina<br>Pannonian sea-origin soil — rich in minerals, marl and sandstone<br><br>Warm Pannonian sun · Mediterranean wind influence · ideal ripening conditions</div>
+          <div class="detail-value jp" data-lang="jp"><strong>フルシュカ・ゴーラ</strong>、ヴォイヴォディナ<br>パノニア海起源の土壌 — ミネラル豊富、泥灰岩と砂岩<br><br>パノニアの太陽 · 地中海の風の影響 · 理想的な成熟条件</div>
+        </div>
+        <div class="detail-section">
+          <div class="detail-label" data-lang="en">Viticulture</div>
+          <div class="detail-label jp" data-lang="jp">栽培方法</div>
+          <div class="detail-value" data-lang="en">Own vineyards only<br>Low yield — grapes left on vines as long as possible<br>Multiple clones per variety<br>Natural cultivation methods</div>
+          <div class="detail-value jp" data-lang="jp">自社畑のブドウのみ使用<br>低収量 — 完熟まで長期間樹上で成熟<br>品種ごとに複数クローンを栽培<br>自然農法</div>
+        </div>
+        <div class="detail-section">
+          <div class="detail-label" data-lang="en">Winemaking</div>
+          <div class="detail-label jp" data-lang="jp">醸造</div>
+          <div class="detail-value" data-lang="en">Cellar 5m underground<br>Line 1 — inox aged (1 year)<br>Line 2 — barrique aged (2–4 years)<br>Unfiltered (premium line)</div>
+          <div class="detail-value jp" data-lang="jp">地下5mのワインセラー<br>ライン1 — ステンレスタンク熟成（1年）<br>ライン2 — バリック熟成（2〜4年）<br>無ろ過（プレミアムライン）</div>
+        </div>
+        <div class="detail-section">
+          <div class="detail-label" data-lang="en">Contact</div>
+          <div class="detail-label jp" data-lang="jp">連絡先</div>
+          <div class="contact-item"><span class="contact-icon">📱</span><span>+381 63 400 855</span></div>
+          <div class="contact-item"><span class="contact-icon">✉️</span><a href="mailto:info@bt-winery.com">info@bt-winery.com</a></div>
+          <div class="contact-item"><span class="contact-icon">🌐</span><a href="https://bt-winery.com" target="_blank">bt-winery.com</a></div>
+        </div>
       </div>
     </aside>
   </div>
@@ -957,5 +938,18 @@ body.lang-jp .wine-name { font-family: var(--font-jp); font-size: 0.88rem; }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 </script>
+
+<script>
+  const slides = document.querySelectorAll('.hero-slide');
+  if (slides.length > 1) {
+    let current = 0;
+    setInterval(() => {
+      slides[current].classList.remove('active');
+      current = (current + 1) % slides.length;
+      slides[current].classList.add('active');
+    }, 8000);
+  }
+</script>
+
 </body>
 </html>
